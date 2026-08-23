@@ -56,6 +56,8 @@ flowchart TB
     J["🔧 GitHub Automation<br/>.github/"] -.-> B
     J -.-> D
     J -.-> E
+```
+
 ---
 
 ## 🔄 ETL Workflow
