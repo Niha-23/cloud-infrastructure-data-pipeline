@@ -35,32 +35,28 @@ The project follows a modular architecture with separate components for configur
 
 ```mermaid
 flowchart TB
+    A["📥 Raw Data<br/>data/raw/"] --> B["⚙️ Ingestion<br/>src/ingestion/"]
+    B --> C["🔍 Data Validation"]
+    C --> D["🔄 Transformation<br/>src/transformation/"]
+    D --> E["💾 Storage<br/>src/storage/"]
+    E --> F["📤 Processed Data<br/>data/processed/"]
 
-    A[📥 Raw Data<br/>data/raw/] --> B[⚙️ Ingestion<br/>src/ingestion/]
-
-    B --> C[🔍 Data Validation]
-
-    C --> D[🔄 Transformation<br/>src/transformation/]
-
-    D --> E[💾 Storage<br/>src/storage/]
-
-    E --> F[📤 Processed Data<br/>data/processed/]
-
-    G[⚙️ Configuration<br/>src/config.py] -.-> B
+    G["⚙️ Configuration<br/>src/config.py"] -.-> B
     G -.-> D
     G -.-> E
 
-    H[📝 Logging<br/>src/logger.py] -.-> B
+    H["📝 Logging<br/>src/logger.py"] -.-> B
     H -.-> D
     H -.-> E
 
-    I[🧪 Automated Tests<br/>tests/test_etl.py] -.-> B
+    I["🧪 Automated Tests<br/>tests/test_etl.py"] -.-> B
     I -.-> D
     I -.-> E
 
-    J[🔧 GitHub Automation<br/>.github/] -.-> B
+    J["🔧 GitHub Automation<br/>.github/"] -.-> B
     J -.-> D
     J -.-> E
+---
 
 ## 🔄 ETL Workflow
 
