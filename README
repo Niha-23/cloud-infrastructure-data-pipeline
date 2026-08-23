@@ -1,0 +1,60 @@
+*Cloud-Based ETL Data Engineering Pipeline
+
+A production-style cloud data engineering project that demonstrates how raw data can be extracted, cleaned, transformed, stored, and prepared for downstream analytics using Python and AWS.
+
+*Project Overview
+
+This project implements an end-to-end ETL (Extract, Transform, Load) pipeline designed to process raw datasets and convert them into clean, structured, analysis-ready data.
+
+The pipeline demonstrates practical data engineering concepts including:
+
+- Data extraction
+- Data validation
+- Data cleaning
+- Data transformation
+- Data quality checks
+- Cloud storage
+- ETL automation
+- Python-based data processing
+- AWS cloud infrastructure
+
+The project was designed as a hands-on demonstration of how a data pipeline can move data from a raw state to a structured state suitable for analytics and reporting.
+
+---
+
+## 🏗️ Architecture
+
+```text
+                    ┌──────────────────┐
+                    │   Raw Dataset    │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │     Extract      │
+                    │     Python       │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │      Clean       │
+                    │   & Validate     │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │    Transform     │
+                    │     Python       │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │     AWS S3       │
+                    │  Cloud Storage   │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │ Processed Data   │
+                    │   & Analytics    │
+                    └──────────────────┘
