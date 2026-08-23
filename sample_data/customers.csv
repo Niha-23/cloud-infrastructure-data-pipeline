@@ -1,0 +1,9 @@
+customer_id,name,email,country,signup_date,spend
+1001,Alice Johnson,alice@example.com,Canada,2025-01-15,1250.50
+1002,Bob Smith,bob@example.com,USA,2025-02-10,850.75
+1003,Charlie Brown,charlie@example.com,Canada,2025-02-22,420.25
+1004,Diana Wilson,diana@example.com,UK,2025-03-05,2200.00
+1005,Ethan Davis,ethan@example.com,Canada,2025-03-18,675.80
+1006,Fiona Miller,fiona@example.com,USA,2025-04-01,990.10
+1007,George Taylor,george@example.com,Canada,2025-04-12,1450.00
+1008,Hannah Moore,hannah@example.com,UK,2025-04-25,310.50

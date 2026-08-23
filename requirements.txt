@@ -1,0 +1,9 @@
+pandas
+boto3
+PyYAML
+python-dotenv
+SQLAlchemy
+pymysql
+requests
+pytest
+ruff
