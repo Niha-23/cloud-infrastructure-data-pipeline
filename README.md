@@ -1,5 +1,5 @@
 # ☁️ Cloud-Based ETL Data Engineering Pipeline
-
+[![CI Pipeline](https://github.com/Niha-23/cloud-infrastructure-data-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/Niha-23/cloud-infrastructure-data-pipeline/actions/workflows/ci.yml)
 > An end-to-end Python ETL pipeline designed to extract, validate, transform, and load data while following production-oriented software engineering practices.
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue)
