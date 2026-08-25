@@ -203,13 +203,13 @@ Before running the project, make sure you have:
 ## 1. Clone the repository
 
 ```bash
-git clone https://github.com/Niha-23/YOUR-REPOSITORY.git
+git clone https://github.com/Niha-23/cloud-infrastructure-data-pipeline.git
 ```
 
 Navigate into the project:
 
 ```bash
-cd YOUR-REPOSITORY
+cd cloud-infrastructure-data-pipeline
 ```
 
 ---
@@ -290,7 +290,11 @@ Transformation
     ↓
 Output
 ```
+### Pipeline Execution
 
+Example successful pipeline execution:
+
+![Pipeline Execution](docs/screenshots/pipeline-run.png)
 ---
 
 ## 🧪 Running Tests
@@ -310,6 +314,11 @@ pytest -v
 ```
 
 Testing helps verify that the pipeline components behave as expected and reduces the risk of introducing regressions when the project is modified.
+### Test Execution
+
+The pipeline includes automated tests using Pytest.
+
+![Test Execution](docs/screenshots/tests-passed.png)
 
 ---
 
