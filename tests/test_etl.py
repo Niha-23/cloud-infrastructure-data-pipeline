@@ -64,3 +64,48 @@ def test_transform_normalizes_email():
         result.iloc[0]["email"]
         == "alice@example.com"
     )
+def test_transform_creates_customer_segment():
+    data = pd.DataFrame(
+        {
+            "customer_id": [1],
+            "name": ["Alice"],
+            "email": ["alice@example.com"],
+            "country": ["Canada"],
+            "signup_date": ["2025-01-01"],
+            "spend": [1500],
+        }
+    )
+
+    result = transform(data)
+
+    assert result.iloc[0]["customer_segment"] == "High"
+    
+def test_transform_rejects_missing_required_columns():
+    data = pd.DataFrame(
+        {
+            "customer_id": [1],
+            "name": ["Alice"],
+            "email": ["alice@example.com"],
+        }
+    )
+
+    try:
+        transform(data)
+        assert False, "Expected ValueError for missing columns"
+    except ValueError as error:
+        assert "Missing required columns" in str(error)
+def test_transform_handles_invalid_spend():
+    data = pd.DataFrame(
+        {
+            "customer_id": [1],
+            "name": ["Alice"],
+            "email": ["alice@example.com"],
+            "country": ["Canada"],
+            "signup_date": ["2025-01-01"],
+            "spend": ["not-a-number"],
+        }
+    )
+
+    result = transform(data)
+
+    assert len(result) == 0
