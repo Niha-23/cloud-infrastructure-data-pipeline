@@ -1,6 +1,9 @@
 from pathlib import Path
 from unittest.mock import MagicMock
 
+import pytest
+from botocore.exceptions import ClientError
+
 from src.storage.s3 import S3Storage
 
 
@@ -11,9 +14,7 @@ def test_s3_connection():
     s3 = S3Storage(BUCKET_NAME)
 
     s3.s3_client.list_objects_v2 = MagicMock(
-        return_value={
-            "Contents": []
-        }
+        return_value={"Contents": []}
     )
 
     response = s3.s3_client.list_objects_v2(
@@ -49,11 +50,7 @@ def test_download_raw_customers(tmp_path):
 
     local_file = Path(tmp_path) / "customers.csv"
 
-    def fake_download(
-        bucket,
-        key,
-        filename
-    ):
+    def fake_download(bucket, key, filename):
         Path(filename).write_text(
             "customer_id,name,email\n"
             "1,Test,test@example.com\n"
@@ -69,7 +66,6 @@ def test_download_raw_customers(tmp_path):
     )
 
     assert local_file.exists()
-
     assert "test@example.com" in local_file.read_text()
 
     s3.s3_client.download_file.assert_called_once_with(
@@ -77,3 +73,68 @@ def test_download_raw_customers(tmp_path):
         "raw/customers.csv",
         str(local_file)
     )
+
+
+def test_upload_file(tmp_path):
+    s3 = S3Storage(BUCKET_NAME)
+
+    local_file = Path(tmp_path) / "customers.csv"
+
+    local_file.write_text(
+        "customer_id,name,email\n"
+        "1,Test,test@example.com\n"
+    )
+
+    s3.s3_client.upload_file = MagicMock()
+
+    s3.upload_file(
+        str(local_file),
+        "raw/customers.csv"
+    )
+
+    s3.s3_client.upload_file.assert_called_once_with(
+        str(local_file),
+        BUCKET_NAME,
+        "raw/customers.csv"
+    )
+
+
+def test_file_exists_returns_false_for_missing_file():
+    s3 = S3Storage(BUCKET_NAME)
+
+    error_response = {
+        "Error": {
+            "Code": "404",
+            "Message": "Not Found"
+        }
+    }
+
+    s3.s3_client.head_object = MagicMock(
+        side_effect=ClientError(
+            error_response,
+            "HeadObject"
+        )
+    )
+
+    assert s3.file_exists("raw/missing.csv") is False
+
+
+def test_file_exists_raises_unexpected_error():
+    s3 = S3Storage(BUCKET_NAME)
+
+    error_response = {
+        "Error": {
+            "Code": "403",
+            "Message": "Access Denied"
+        }
+    }
+
+    s3.s3_client.head_object = MagicMock(
+        side_effect=ClientError(
+            error_response,
+            "HeadObject"
+        )
+    )
+
+    with pytest.raises(ClientError):
+        s3.file_exists("raw/customers.csv")
