@@ -1,234 +1,529 @@
 # ☁️ Cloud-Based ETL Data Engineering Pipeline
-[![CI Pipeline](https://github.com/Niha-23/cloud-infrastructure-data-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/Niha-23/cloud-infrastructure-data-pipeline/actions/workflows/ci.yml)
-> An end-to-end Python ETL pipeline designed to extract, validate, transform, and load data while following production-oriented software engineering practices.
 
-![Python](https://img.shields.io/badge/Python-3.x-blue)
-![ETL](https://img.shields.io/badge/Data%20Engineering-ETL-orange)
-![Testing](https://img.shields.io/badge/Testing-Pytest-green)
-![AWS](https://img.shields.io/badge/Cloud-AWS-yellow)
-![License](https://img.shields.io/badge/License-MIT-lightgrey)
+[![CI Pipeline](https://github.com/Niha-23/cloud-infrastructure-data-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/Niha-23/cloud-infrastructure-data-pipeline/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-blue)](https://www.python.org/)
+[![AWS S3](https://img.shields.io/badge/AWS-S3-orange)](https://aws.amazon.com/s3/)
+[![Pandas](https://img.shields.io/badge/Pandas-Data%20Processing-150458)](https://pandas.pydata.org/)
+[![Pytest](https://img.shields.io/badge/Pytest-8%20Tests-green)](https://pytest.org/)
+[![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI-2088FF)](https://github.com/features/actions)
+
+> A modular Python ETL pipeline that ingests customer data, validates and transforms records, stores raw and processed datasets in Amazon S3, and automatically tests the application using Pytest and GitHub Actions.
 
 ---
 
 ## 📌 Overview
 
-This project demonstrates the development of a structured **ETL (Extract, Transform, Load) data pipeline using Python**.
+This project demonstrates the design and implementation of a **cloud-integrated ETL (Extract, Transform, Load) data pipeline** using Python, Pandas, Boto3, and Amazon S3.
 
-The pipeline is designed to take raw data through a series of controlled processing stages, apply validation and transformation logic, and produce clean, structured output suitable for downstream analytics and data workflows.
-
-The project follows a modular architecture with separate components for configuration, data processing, testing, documentation, and pipeline execution.
-
-### Key objectives
-
-* Build a reusable ETL pipeline using Python
-* Separate extraction, transformation, and loading responsibilities
-* Implement data validation and quality checks
-* Organize the project using a maintainable software structure
-* Include automated testing with Pytest
-* Use environment-based configuration
-* Provide sample data for reproducible testing
-* Prepare the project for future cloud integration
-
----
-
-## 🏗️ Pipeline Architecture
-
-```mermaid
-flowchart TB
-    A["📥 Raw Data<br/>data/raw/"] --> B["⚙️ Ingestion<br/>src/ingestion/"]
-    B --> C["🔍 Data Validation"]
-    C --> D["🔄 Transformation<br/>src/transformation/"]
-    D --> E["💾 Storage<br/>src/storage/"]
-    E --> F["📤 Processed Data<br/>data/processed/"]
-
-    G["⚙️ Configuration<br/>src/config.py"] -.-> B
-    G -.-> D
-    G -.-> E
-
-    H["📝 Logging<br/>src/logger.py"] -.-> B
-    H -.-> D
-    H -.-> E
-
-    I["🧪 Automated Tests<br/>tests/test_etl.py"] -.-> B
-    I -.-> D
-    I -.-> E
-
-    J["🔧 GitHub Automation<br/>.github/"] -.-> B
-    J -.-> D
-    J -.-> E
-```
-
----
-
-## 🔄 ETL Workflow
-
-### 1. Extract
-
-The pipeline reads data from the configured input source and prepares it for processing.
-
-The project includes sample data so that the pipeline can be executed and tested in a reproducible environment.
-
-### 2. Validate
-
-Input data is checked before transformation.
-
-Validation helps identify issues such as:
-
-* Missing or invalid values
-* Unexpected data formats
-* Invalid records
-* Incorrect data structures
-* Data quality issues
-
-### 3. Transform
-
-Validated data is processed through transformation logic designed to produce a cleaner and more consistent dataset.
-
-Depending on the configured pipeline, transformations may include:
-
-* Data cleaning
-* Standardization
-* Type conversion
-* Field transformation
-* Record filtering
-* Data normalization
-
-### 4. Load
-
-The transformed data is written to the configured output destination.
-
-The modular design allows the loading layer to be extended for additional storage systems and cloud-based destinations.
-
----
-
-## 🛠️ Technology Stack
-
-| Technology                | Purpose                                 |
-| ------------------------- | --------------------------------------- |
-| **Python**                | Core ETL and data-processing language   |
-| **Pytest**                | Automated testing                       |
-| **Git**                   | Version control                         |
-| **GitHub**                | Source-code management                  |
-| **Environment Variables** | Configuration and secrets management    |
-| **AWS**                   | Cloud integration target                |
-| **.venv**                 | Isolated Python development environment |
-
----
-
-## 📂 Project Structure
+The pipeline processes customer data through a structured workflow:
 
 ```text
-cloud-data-engineering-pipeline/
+Customer CSV
+     │
+     ▼
+Python ETL Pipeline
+     │
+     ▼
+Upload Raw Data
+     │
+     ▼
+Amazon S3 - Raw Layer
+     │
+     ▼
+Download Raw Data
+     │
+     ▼
+Data Validation
+     │
+     ▼
+Data Transformation
+     │
+     ▼
+Customer Segmentation
+     │
+     ▼
+Processed CSV
+     │
+     ▼
+Amazon S3 - Processed Layer
+```
+
+The project also includes:
+
+* Automated unit testing with Pytest
+* Mocked AWS operations for CI-safe testing
+* GitHub Actions continuous integration
+* Environment-based configuration
+* Application logging
+* Modular software architecture
+* Security-conscious credential handling
+* Architecture documentation
+
+---
+
+# 🎯 Key Results
+
+* ✅ Built an end-to-end Python ETL pipeline
+* ✅ Integrated Amazon S3 using Boto3
+* ✅ Implemented raw and processed data layers
+* ✅ Added schema and data-quality validation
+* ✅ Implemented email normalization and data cleaning
+* ✅ Removed duplicate and invalid records
+* ✅ Added customer spending segmentation
+* ✅ Added 8 automated tests
+* ✅ Added mocked S3 tests for CI
+* ✅ Integrated GitHub Actions
+* ✅ Separated configuration from application code
+* ✅ Added application logging
+* ✅ Documented the system architecture
+
+---
+
+# 🏗️ Architecture
+
+```mermaid
+flowchart TD
+    A["Customer CSV"] --> B["Python ETL Pipeline"]
+
+    B --> C["Upload Raw Data"]
+    C --> D["Amazon S3 - Raw Layer"]
+
+    D --> E["Download Raw Data"]
+    E --> F["Pandas DataFrame"]
+
+    F --> G["Data Validation"]
+    G --> H["Data Transformation"]
+
+    H --> I["Data Cleaning"]
+    I --> J["Customer Segmentation"]
+
+    J --> K["Processed CSV"]
+    K --> L["Amazon S3 - Processed Layer"]
+
+    B --> M["Application Logging"]
+    B --> N["Pytest"]
+
+    N --> O["GitHub Actions CI"]
+```
+
+For a detailed explanation of the architecture and design decisions, see:
+
+[`docs/architecture.md`](docs/architecture.md)
+
+---
+
+# 🔄 ETL Workflow
+
+## 1. Extract
+
+The pipeline starts with the sample customer dataset:
+
+```text
+sample_data/customers.csv
+```
+
+The dataset contains:
+
+* `customer_id`
+* `name`
+* `email`
+* `country`
+* `signup_date`
+* `spend`
+
+---
+
+## 2. Load Raw Data to S3
+
+The source dataset is uploaded to the Amazon S3 raw layer:
+
+```text
+raw/customers.csv
+```
+
+The raw layer preserves the source data before transformation.
+
+---
+
+## 3. Download and Ingest
+
+The pipeline downloads the raw file from S3:
+
+```text
+data/raw/customers.csv
+```
+
+The ingestion logic is implemented in:
+
+```text
+src/ingestion/csv_ingestion.py
+```
+
+The ingestion layer:
+
+* Verifies the input file exists
+* Loads the CSV using Pandas
+* Reports row and column counts
+* Returns a Pandas DataFrame
+
+---
+
+## 4. Validate Data
+
+The pipeline validates the dataset before transformation.
+
+Required columns:
+
+```text
+customer_id
+name
+email
+country
+signup_date
+spend
+```
+
+Validation includes:
+
+* Required column validation
+* Email format validation
+* Numeric spend validation
+* Missing-value handling
+* Date conversion
+* Negative-spend detection
+* Duplicate customer detection
+
+---
+
+## 5. Transform Data
+
+Transformation logic is implemented in:
+
+```text
+src/transformation/etl.py
+```
+
+### Email Normalization
+
+Email addresses are converted to lowercase and stripped of unnecessary whitespace.
+
+```text
+ USER@EXAMPLE.COM
+```
+
+becomes:
+
+```text
+user@example.com
+```
+
+### Text Cleaning
+
+Whitespace is removed from:
+
+* Customer names
+* Countries
+* Email addresses
+
+### Date Conversion
+
+Signup dates are converted into Pandas datetime values.
+
+Invalid dates are converted safely and handled during validation.
+
+### Numeric Conversion
+
+Customer spending values are converted to numeric values.
+
+Invalid numeric values are identified and handled.
+
+### Duplicate Removal
+
+Duplicate customers are removed using:
+
+```text
+customer_id
+```
+
+### Invalid Record Removal
+
+Records missing required values are excluded from the final processed dataset.
+
+### Negative Spend Removal
+
+Negative spending values are excluded from the processed dataset.
+
+---
+
+# 💰 Customer Segmentation
+
+The pipeline creates customer segments based on spending.
+
+| Segment |    Spending Range |
+| ------- | ----------------: |
+| Low     |       $0 – < $500 |
+| Medium  |   $500 – < $1,000 |
+| High    | $1,000 – < $2,000 |
+| Premium |           $2,000+ |
+
+This demonstrates how an ETL pipeline can perform both **data quality processing** and **business-oriented transformation**.
+
+---
+
+# ☁️ Amazon S3 Architecture
+
+Amazon S3 provides the cloud storage layer.
+
+The project uses two logical data layers:
+
+```text
+cloud-infrastructure-data-pipeline-niharika
+│
+├── raw/
+│   └── customers.csv
+│
+└── processed/
+    └── customers_processed.csv
+```
+
+### Raw Layer
+
+```text
+raw/customers.csv
+```
+
+Stores the original source dataset.
+
+### Processed Layer
+
+```text
+processed/customers_processed.csv
+```
+
+Stores the validated and transformed dataset.
+
+This separation provides a simple foundation for a **data-lake-style architecture**.
+
+---
+
+# 💾 Local Data Flow
+
+During pipeline execution, local copies are maintained:
+
+```text
+sample_data/
+└── customers.csv
+        │
+        ▼
+data/raw/
+└── customers.csv
+        │
+        ▼
+ETL Transformation
+        │
+        ▼
+data/processed/
+└── customers_processed.csv
+```
+
+The processed file is then uploaded to the S3 processed layer.
+
+---
+
+# 🛠️ Technology Stack
+
+| Technology         | Purpose                                |
+| ------------------ | -------------------------------------- |
+| **Python 3.11+**   | Core programming language              |
+| **Pandas**         | Data loading and transformation        |
+| **Boto3**          | AWS SDK for Python                     |
+| **Amazon S3**      | Cloud object storage                   |
+| **Pytest**         | Automated testing                      |
+| **unittest.mock**  | Mocking AWS operations                 |
+| **Git**            | Version control                        |
+| **GitHub**         | Source-code hosting                    |
+| **GitHub Actions** | Continuous integration                 |
+| **python-dotenv**  | Environment configuration              |
+| **Python Logging** | Application monitoring and diagnostics |
+
+---
+
+# 📂 Project Structure
+
+```text
+cloud-infrastructure-data-pipeline/
 │
 ├── .github/
 │   └── workflows/
-│       └── ...
-│
-├── data/
-│   ├── raw/
-│   └── processed/
+│       └── ci.yml
 │
 ├── docs/
-│   └── ...
+│   ├── architecture.md
+│   └── images/
+│       ├── pipeline-run.png
+│       └── tests-passed.png
 │
 ├── sample_data/
-│   └── ...
+│   └── customers.csv
 │
 ├── src/
-│   └── ...
+│   ├── ingestion/
+│   │   ├── __init__.py
+│   │   └── csv_ingestion.py
+│   │
+│   ├── storage/
+│   │   ├── __init__.py
+│   │   └── s3.py
+│   │
+│   ├── transformation/
+│   │   ├── __init__.py
+│   │   └── etl.py
+│   │
+│   ├── config.py
+│   └── logger.py
 │
 ├── tests/
-│   └── ...
+│   ├── __init__.py
+│   ├── test_etl.py
+│   └── test_s3.py
 │
 ├── .env.example
 ├── .gitignore
-├── config
+├── LICENSE
 ├── README.md
 ├── requirements.txt
-└── run_pipeline
+└── run_pipeline.py
 ```
 
-### Directory responsibilities
+---
 
-**`src/`**
+# 📁 Component Responsibilities
 
-Contains the core application and ETL processing logic.
+### `src/ingestion/`
 
-**`data/`**
+Handles loading source CSV data into Pandas.
 
-Contains data used by the pipeline and/or generated pipeline outputs.
+### `src/transformation/`
 
-**`sample_data/`**
+Contains:
 
-Contains sample input data used for development and testing.
+* Validation
+* Cleaning
+* Transformation
+* Duplicate removal
+* Customer segmentation
 
-**`tests/`**
+### `src/storage/`
 
-Contains automated tests for validating pipeline functionality.
+Contains Amazon S3 integration using Boto3.
 
-**`docs/`**
+### `src/config.py`
 
-Contains supporting project documentation.
+Loads environment-based configuration.
 
-**`.github/`**
+### `src/logger.py`
 
-Contains GitHub-related configuration and workflow automation.
+Provides application logging.
 
-**`.env.example`**
+### `tests/`
 
-Provides an example of environment variables required by the application without exposing actual credentials or secrets.
+Contains automated unit tests for ETL and S3 functionality.
 
-**`config`**
+### `sample_data/`
 
-Contains project configuration used by the pipeline.
+Contains reproducible input data.
 
-**`run_pipeline`**
+### `docs/`
 
-Provides the pipeline execution entry point.
+Contains architecture documentation and project screenshots.
+
+### `.github/workflows/`
+
+Contains the GitHub Actions CI workflow.
 
 ---
 
-## ⚙️ Getting Started
+# ⚙️ Configuration
 
-### Prerequisites
+Environment-specific configuration is managed using environment variables.
 
-Before running the project, make sure you have:
+The application uses:
 
-* Python 3.x
+```text
+AWS_REGION
+S3_BUCKET_NAME
+S3_RAW_PREFIX
+S3_PROCESSED_PREFIX
+```
+
+Example:
+
+```env
+AWS_REGION=us-east-2
+S3_BUCKET_NAME=your-bucket-name
+S3_RAW_PREFIX=raw/
+S3_PROCESSED_PREFIX=processed/
+```
+
+A configuration template is provided:
+
+```text
+.env.example
+```
+
+The actual `.env` file should remain local and must not be committed to Git.
+
+---
+
+# 🔐 Security
+
+The project follows basic cloud security practices.
+
+* AWS credentials are not hard-coded in Python source files.
+* `.env` is excluded using `.gitignore`.
+* Environment variables are used for configuration.
+* AWS operations are performed through Boto3.
+* S3 operations are mocked during CI testing.
+* GitHub Actions does not require personal AWS credentials to run the unit test suite.
+* Production deployments should use IAM roles and temporary credentials where possible.
+
+> **Never commit AWS access keys, secret keys, passwords, API keys, or other credentials to GitHub.**
+
+---
+
+# 🚀 Getting Started
+
+## Prerequisites
+
+Install:
+
+* Python 3.11+
 * Git
-* A terminal or command prompt
+* An AWS account
+* An Amazon S3 bucket
+* AWS credentials configured through a supported AWS credential provider
 
 ---
 
-## 1. Clone the repository
+## 1. Clone the Repository
 
 ```bash
 git clone https://github.com/Niha-23/cloud-infrastructure-data-pipeline.git
-```
-
-Navigate into the project:
-
-```bash
 cd cloud-infrastructure-data-pipeline
 ```
 
 ---
 
-## 2. Create a virtual environment
+## 2. Create a Virtual Environment
 
-On Windows:
+### Windows
 
-```bash
+```powershell
 python -m venv .venv
+.venv\Scripts\Activate.ps1
 ```
 
-Activate it:
-
-```bash
-.venv\Scripts\activate
-```
-
-On macOS/Linux:
+### macOS / Linux
 
 ```bash
 python3 -m venv .venv
@@ -237,7 +532,7 @@ source .venv/bin/activate
 
 ---
 
-## 3. Install dependencies
+## 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -245,262 +540,508 @@ pip install -r requirements.txt
 
 ---
 
-## 4. Configure environment variables
+## 4. Configure Environment Variables
 
-Create your local environment configuration from the example file.
+Create `.env` from the provided template.
 
-```bash
+### Windows
+
+```powershell
 copy .env.example .env
 ```
 
-For macOS/Linux:
+### macOS / Linux
 
 ```bash
 cp .env.example .env
 ```
 
-Update `.env` with your local configuration.
+Update the values:
 
-> **Important:** Never commit `.env` or credentials, API keys, passwords, or other secrets to GitHub.
+```env
+AWS_REGION=us-east-2
+S3_BUCKET_NAME=your-bucket-name
+S3_RAW_PREFIX=raw/
+S3_PROCESSED_PREFIX=processed/
+```
 
 ---
 
-## ▶️ Running the Pipeline
+# ☁️ AWS Setup
 
-The project includes a dedicated pipeline execution entry point.
+The pipeline requires an Amazon S3 bucket.
 
-Run the pipeline using:
-
-```bash
-python run_pipeline
-```
-
-If your local project uses a different execution command, refer to the implementation in `run_pipeline`.
-
-The general workflow is:
+The configured bucket should contain or support the following logical prefixes:
 
 ```text
-Input Data
-    ↓
-Extraction
-    ↓
-Validation
-    ↓
-Transformation
-    ↓
-Output
+raw/
+processed/
 ```
-### Pipeline Execution
 
-Example successful pipeline execution:
+The pipeline uploads and retrieves objects using these prefixes.
 
-![Pipeline Execution](docs/screenshots/pipeline-run.png)
+No AWS credentials should be stored inside the repository.
+
 ---
 
-## 🧪 Running Tests
+# ▶️ Running the Pipeline
+
+From the project root:
+
+```powershell
+python run_pipeline.py
+```
+
+The pipeline executes:
+
+```text
+Customer CSV
+     │
+     ▼
+Upload Raw Data
+     │
+     ▼
+Amazon S3 - Raw
+     │
+     ▼
+Download Raw Data
+     │
+     ▼
+Load with Pandas
+     │
+     ▼
+Validate
+     │
+     ▼
+Transform
+     │
+     ▼
+Customer Segmentation
+     │
+     ▼
+Save Processed CSV
+     │
+     ▼
+Upload to S3 - Processed
+     │
+     ▼
+Pipeline Complete
+```
+
+---
+
+# 📊 Pipeline Output
+
+The processed dataset is saved locally:
+
+```text
+data/processed/customers_processed.csv
+```
+
+It is also uploaded to:
+
+```text
+processed/customers_processed.csv
+```
+
+The application logs important execution events including:
+
+* Pipeline start
+* S3 upload
+* S3 download
+* Data loading
+* Transformation
+* Input/output row counts
+* Processed data upload
+* Pipeline completion
+* Operational errors
+
+---
+
+# 🧪 Testing
 
 The project uses **Pytest** for automated testing.
 
-Run:
+Run the complete test suite:
 
-```bash
+```powershell
 pytest
 ```
 
-For more detailed output:
+For detailed output:
 
-```bash
+```powershell
 pytest -v
 ```
 
-Testing helps verify that the pipeline components behave as expected and reduces the risk of introducing regressions when the project is modified.
-### Test Execution
+## Test Coverage
 
-The pipeline includes automated tests using Pytest.
+The current test suite contains **8 automated tests** covering:
 
-![Test Execution](docs/screenshots/tests-passed.png)
+### ETL
+
+* Duplicate customer removal
+* Email normalization
+* Customer segmentation
+* Missing required columns
+* Invalid spend handling
+
+### S3
+
+* S3 storage behavior
+* File existence checks
+* File download behavior
+
+AWS operations are mocked using:
+
+```python
+unittest.mock
+```
+
+This allows the test suite to run without requiring AWS credentials.
 
 ---
 
-## 🔐 Configuration & Security
+# ✅ Test Results
 
-The project uses environment-based configuration to avoid hard-coding sensitive information.
-
-The repository includes:
+The current project test suite passes successfully:
 
 ```text
-.env.example
+8 passed
 ```
 
-while the actual:
+The repository also uses GitHub Actions to automatically execute the test suite.
 
-```text
-.env
-```
+### Local Test Execution
 
-should remain local and should not be committed.
-
-The `.gitignore` file is used to prevent local environments, caches, generated files, and sensitive configuration from being accidentally committed.
+![Pytest results](docs/images/tests-passed.png)
 
 ---
 
-## 🧩 Engineering Practices
+# 🔄 Continuous Integration
 
-This project demonstrates several software engineering practices commonly used in real-world data projects:
+GitHub Actions is configured through:
 
-### Modular Design
+```text
+.github/workflows/ci.yml
+```
 
-ETL responsibilities are separated into reusable components rather than placing the entire pipeline into one script.
+The workflow runs when:
+
+* Code is pushed to `main`
+* A pull request targets `main`
+
+The CI workflow performs:
+
+```text
+Push / Pull Request
+        │
+        ▼
+Checkout Repository
+        │
+        ▼
+Set Up Python
+        │
+        ▼
+Install Dependencies
+        │
+        ▼
+Run Pytest
+        │
+        ▼
+Pass / Fail
+```
+
+This provides automated regression testing for repository changes.
+
+---
+
+# 📸 Pipeline Execution
+
+Example pipeline execution:
+
+![Pipeline execution](docs/images/pipeline-run.png)
+
+---
+
+# 🧪 Testing Strategy
+
+The project intentionally separates application logic from external cloud dependencies.
+
+### Unit Testing
+
+ETL logic is tested independently using Pytest.
+
+### Mocked Cloud Operations
+
+S3 interactions are mocked using `unittest.mock`.
+
+### CI Safety
+
+GitHub Actions can execute the test suite without access to personal AWS credentials.
+
+This approach provides:
+
+* Faster tests
+* Repeatable tests
+* Safer CI execution
+* Isolation from external infrastructure
+
+---
+
+# 📝 Logging
+
+Application logging is implemented in:
+
+```text
+src/logger.py
+```
+
+The pipeline records important execution events such as:
+
+```text
+Starting customer data pipeline.
+Uploading raw data to S3.
+Downloading raw data from S3.
+Loading CSV file.
+Transforming customer records.
+Saving processed data.
+Uploading processed data to S3.
+Pipeline completed successfully.
+```
+
+Logging also records input/output row counts and operational errors.
+
+---
+
+# 🧩 Engineering Practices
+
+The project follows several software engineering principles.
+
+### Modular Architecture
+
+The application separates:
+
+* Configuration
+* Data ingestion
+* Data transformation
+* Cloud storage
+* Logging
+* Testing
+
+### Separation of Concerns
+
+S3 operations are separated from transformation logic.
 
 ### Configuration Management
 
-Environment-specific settings are separated from application logic.
+Environment-specific settings are externalized through environment variables.
 
 ### Automated Testing
 
-Pytest is used to validate pipeline functionality.
+Core ETL and storage behavior is covered by automated tests.
 
-### Version Control
+### Continuous Integration
 
-Git is used to track changes and GitHub is used for source-code management.
+GitHub Actions automatically runs the test suite.
 
 ### Reproducibility
 
-Sample data and dependency definitions make it easier to reproduce the development environment.
+Sample data and dependency definitions allow the project to be recreated in another development environment.
 
-### Security Awareness
+### Cloud Integration
 
-Sensitive configuration is managed through environment variables rather than being stored directly in source code.
+Boto3 provides the interface between the Python application and Amazon S3.
 
 ---
 
-## ☁️ Cloud Engineering Roadmap
+# 📈 Current Capabilities
 
-The project architecture is designed so that the pipeline can be extended into a cloud-based data engineering solution.
+| Capability                             | Status |
+| -------------------------------------- | :----: |
+| Python ETL pipeline                    |    ✅   |
+| CSV ingestion                          |    ✅   |
+| Schema validation                      |    ✅   |
+| Data cleaning                          |    ✅   |
+| Email normalization                    |    ✅   |
+| Date conversion                        |    ✅   |
+| Spend validation                       |    ✅   |
+| Duplicate removal                      |    ✅   |
+| Customer segmentation                  |    ✅   |
+| Amazon S3 integration                  |    ✅   |
+| Raw data storage                       |    ✅   |
+| Processed data storage                 |    ✅   |
+| Application logging                    |    ✅   |
+| Automated Pytest tests                 |    ✅   |
+| Mocked S3 tests                        |    ✅   |
+| GitHub Actions CI                      |    ✅   |
+| Environment-based configuration        |    ✅   |
+| Security-conscious credential handling |    ✅   |
+| Architecture documentation             |    ✅   |
+
+---
+
+# ☁️ Future Cloud Engineering Roadmap
+
+The current implementation provides a foundation that can evolve into a more production-oriented cloud data platform.
 
 Potential future architecture:
 
 ```text
-                 Raw Data
-                    │
-                    ▼
-              AWS S3 Bucket
-                    │
-                    ▼
-              Python ETL
-                    │
-          ┌─────────┴─────────┐
-          ▼                   ▼
-      Validation          Transformation
-          │                   │
-          └─────────┬─────────┘
-                    ▼
-             Processed Data
-                    │
-                    ▼
-               AWS S3
-                    │
-                    ▼
-          Analytics / BI Layer
+                    Data Source
+                        │
+                        ▼
+                 Amazon S3 Raw
+                        │
+                        ▼
+                  ETL Processing
+                        │
+              ┌─────────┴─────────┐
+              │                   │
+              ▼                   ▼
+         Validation         Transformation
+              │                   │
+              └─────────┬─────────┘
+                        ▼
+               Amazon S3 Processed
+                        │
+                        ▼
+                  Analytics Layer
 ```
 
-Potential future enhancements include:
+Potential future AWS capabilities include:
 
-* AWS S3 integration
 * AWS Lambda
+* Amazon EventBridge
 * AWS Glue
-* CloudWatch monitoring
-* Database integration
-* Pipeline orchestration
-* CI/CD automation
-* Infrastructure as Code
+* Amazon CloudWatch
+* IAM role-based authentication
+* Infrastructure as Code with Terraform
+* Data cataloging
 * Data-quality monitoring
-* Data visualization
+* Workflow orchestration
+* Analytics and BI integration
+
+These are **future enhancements and are not currently part of the implementation**.
 
 ---
 
-## 📈 Future Improvements
+# 🚀 Future Improvements
 
 Planned improvements include:
 
-* [ ] Expand automated test coverage
+* [ ] Increase automated test coverage
+* [ ] Add test coverage reporting
+* [ ] Add advanced data-quality checks
 * [ ] Add structured logging
-* [ ] Add stronger data-quality validation
-* [ ] Add AWS S3 integration
-* [ ] Add cloud-based pipeline execution
-* [ ] Add monitoring and alerting
-* [ ] Implement CI/CD through GitHub Actions
-* [ ] Add data visualization
-* [ ] Add pipeline performance metrics
-* [ ] Introduce workflow orchestration
+* [ ] Add pipeline metrics
+* [ ] Add CloudWatch monitoring
+* [ ] Add automated scheduling
+* [ ] Add AWS Lambda execution
+* [ ] Add EventBridge scheduling
+* [ ] Add Terraform infrastructure
+* [ ] Add Parquet output
+* [ ] Add data-quality reporting
+* [ ] Add analytics/BI integration
+* [ ] Add pipeline alerting
 
 ---
 
-## 🎯 Skills Demonstrated
+# 🎓 Skills Demonstrated
 
-This project demonstrates practical experience with:
-
-**Programming**
+### Programming
 
 * Python
+* Pandas
 * Modular programming
 * Exception handling
-* Configuration management
+* Environment configuration
+* Logging
 
-**Data Engineering**
+### Data Engineering
 
 * ETL pipeline design
-* Data extraction
+* Data ingestion
 * Data validation
+* Data cleaning
 * Data transformation
 * Data quality
-* Pipeline execution
+* Customer segmentation
+* Raw and processed data layers
 
-**Testing**
+### Cloud
+
+* AWS
+* Amazon S3
+* Boto3
+* Cloud storage architecture
+* AWS configuration
+* Cloud security fundamentals
+
+### Testing
 
 * Pytest
-* Automated testing
-* Test-driven validation
+* Unit testing
+* Mocking
+* Test isolation
+* Regression testing
 
-**Cloud & DevOps**
+### DevOps
 
-* AWS cloud concepts
-* Environment configuration
 * Git
 * GitHub
-* GitHub workflow automation
+* GitHub Actions
+* Continuous Integration
 * CI/CD concepts
 
-**Software Engineering**
+### Software Engineering
 
-* Project structure
 * Modular architecture
+* Separation of concerns
+* Configuration management
+* Logging
 * Documentation
-* Version control
 * Reproducible development environments
+* Version control
 
 ---
 
-## 💡 Why This Project?
+# 💡 Why This Project?
 
-Data engineering requires more than simply writing scripts to manipulate data.
+This project demonstrates how a data-processing application can be designed as a maintainable cloud-integrated system rather than a simple standalone script.
 
-This project focuses on building a maintainable pipeline with clear separation of responsibilities, automated testing, configuration management, and a structure that can evolve from a local development environment toward cloud infrastructure.
+It combines:
 
-The project provides a foundation for future expansion into a fully cloud-native ETL architecture.
+* Python development
+* Data engineering
+* Cloud storage
+* Data quality
+* Automated testing
+* Continuous integration
+* Configuration management
+* Security practices
+* Technical documentation
+
+The modular architecture provides a foundation for evolving the project into a larger cloud-native data platform.
 
 ---
 
-## 👩‍💻 Author
+# 👩‍💻 Author
 
-### Niharika
+## Niharika
 
-Software Engineer | Cloud & Data Engineering
+**Software Engineer | Cloud & Data Engineering**
 
-GitHub: [Niha-23](https://github.com/Niha-23)
+GitHub: [@Niha-23](https://github.com/Niha-23)
 
 ---
 
-## ⭐ Project
+# 📄 License
 
-If you find this project useful, feel free to explore the repository and follow the development of the pipeline as it evolves toward a cloud-based data engineering architecture.
+This project is licensed under the **MIT License**.
+
+See the [`LICENSE`](LICENSE) file for details.
+
+---
+
+⭐ If you find this project useful, feel free to explore the repository and follow its development.
